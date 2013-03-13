@@ -5,12 +5,37 @@
       	http://www.springframework.org/schema/webflow
       	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
-	
-	<view-state id="catalog" >
+	<on-start>
+		<evaluate expression="cartService.getProducts()" result="flowScope.products"/>
+		<evaluate expression="cartService.getShoppingCart()" result="flowScope.shoppingCart"/>
+	</on-start>
+		
+	<view-state id="catalog">
 		<on-render>
-			<render fragments="body" />
+			<render fragments="body" />			
 		</on-render>
+		<transition on="addItem" to="addItem">
+			<set name="requestScope.productId" value="requestParameters.productId" type="long" />
+		</transition>
+		<transition on="cart" to="cart"/>
 	</view-state>
 	
+	<action-state id="addItem">
+		<evaluate expression="flowScope.shoppingCart.addItem(cartService.getProduct(requestScope.productId))"/>
+		<transition on="*" to="catalog" />
+	</action-state>
+	
+	<view-state id="cart">
+		<on-render>
+			<render fragments="body" />			
+		</on-render>
+		<transition on="return" to="catalog"/>
+	</view-state>
+	
+	<end-state id="exit" view="externalRedirect:/" />
+
+	<global-transitions>
+		<transition on="exit" to="exit"/>
+	</global-transitions>
 	
 </flow>

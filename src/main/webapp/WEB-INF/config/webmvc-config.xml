@@ -24,7 +24,6 @@
 	<!-- Dispatches requests mapped to flows to FlowHandler implementations -->
 	<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
 		<property name="flowExecutor" ref="flowExecutor"/>
-		<property name="saveOutputToFlashScopeOnRedirect" value="true"/>
 	</bean>
 
 		

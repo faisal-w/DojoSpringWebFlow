@@ -9,4 +9,8 @@
 		<put-attribute name="body" value="/shop/catalog.html :: content" type="thymeleaf"/>
 	</definition>
 	
+	<definition name="cart" extends="standardLayout" templateType="thymeleaf">
+		<put-attribute name="body" value="/shop/cart.html :: content" type="thymeleaf"/>
+	</definition>
+	
 </tiles-definitions>

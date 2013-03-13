@@ -32,38 +32,41 @@
     
 	<body>
 		<div id="bd">
-			<h1>Bienvenue dans le Kayak-Shop</h1>
 			<div>
-				<div>
-					<h2>Votre panier</h2>
-					<div th:if="${shoppingCart.itemCount}>0">
-						Votre panier contient <span th:text="${shoppingCart.itemCount}">X</span> article(s).
-					</div>
-					<div th:unless="${shoppingCart.itemCount}>0">
-						Votre panier ne contient pas encore d'articles.
-					</div>
-					<div>
-						<form method="post" th:action="${flowExecutionUrl}">
-							<input type="submit" value="Panier" name="_eventId_cart"/>
-   							<input type="submit" value="Sortir du Shop" name="_eventId_exit"/>
-						</form>
-					</div>
-				
-					<h2>Nos Produits</h2>
+				<form method="post" th:action="${flowExecutionUrl}">
+   					<input type="submit" value="Retour au catalogue" name="_eventId_return"/>
+				</form>
+			</div>
+		</div>
+		<div>
+			<h2>Votre panier</h2>			
+			<div>
+				<div th:unless="${shoppingCart.itemCount}>0">Votre panier est vide</div>
+				<div th:if="${shoppingCart.itemCount}>0">					
 					<table>
-						 <tr th:each="product : ${products}">
-			                <td th:text="${product.description}">Description produit</td>
-			          		<td th:text="${product.price}">99.99</td>
-			          		<td>
-			          			<form method="post" th:action="${flowExecutionUrl}">
-			          				<input name="_eventId" type="hidden" value="addItem"/>
-			          				<input name="productId" type="hidden" th:value="${product.id}"/>
-			          				<input type="submit" value="Ajouter au panier"/>	
-			          			</form>
-			          		</td>
-			            </tr>
+						<tr>
+							<th>Article</th>
+							<th>Quantit&eacute;</th>
+							<th>Prix unitaire</th>
+							<th>Total</th>
+						</tr>
+						
+						<tr th:each="item : ${shoppingCart.items}">
+								<td th:text="${item.product.description}">Description</td>
+								<td th:text="${item.quantity}">2</td>
+								<td th:text="${item.unitPrice}">2.25</td>
+								<td th:text="${item.totalPrice}">4.5</td>
+						</tr>					
+						
+						<tr>
+							<td>TOTAL:</td>
+							<td></td>
+							<td></td>
+							<td th:text="${shoppingCart.totalPrice}">99.99</td>
+						</tr>
 					</table>
 				</div>
+			
 			</div>
 		</div>
 	</body>    
