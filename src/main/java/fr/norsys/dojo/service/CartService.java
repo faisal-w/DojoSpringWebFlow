@@ -2,6 +2,7 @@ package fr.norsys.dojo.service;
 
 import java.util.List;
 
+import fr.norsys.dojo.model.OrderInfo;
 import fr.norsys.dojo.model.Product;
 import fr.norsys.dojo.model.ShoppingCart;
 
@@ -13,7 +14,7 @@ public interface CartService {
 		
 	Product getProduct(long productId);
 	
-	List<String> getShippingOptions();
+	OrderInfo createOrderInfo();
 	
-	void submitOrderForPayment();
+	void submitOrder(OrderInfo orderInfo);
 }

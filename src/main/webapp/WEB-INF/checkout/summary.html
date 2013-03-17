@@ -31,17 +31,33 @@
     
     
 	<body>
-		<div id="bd">
-			<div>
-				<form method="post" th:action="${flowExecutionUrl}">
-   					<input type="submit" value="Retour au catalogue" name="_eventId_return"/>
-				</form>
-			</div>
-		</div>
 		<div>
-			<h2>Votre panier</h2>			
+			<h2>R&eacute;capitulatif</h2>			
 			<div>
-				<div th:unless="${shoppingCart.itemCount}>0">Votre panier est vide</div>
+				<div>Votre commande est bien enregistr&eacute;e. Merci de votre confiance.</div>
+				<div>
+					<form method="post" th:action="${flowExecutionUrl}">
+							<input type="submit" value="Retourner au Shop" name="_eventId_continue"/>
+					</form>
+				</div>
+				<br/>
+				<div>
+					<table>
+						<tr>
+							<td>Nom</td><td th:text="${orderInfo.lastName}">Dupont</td>
+						</tr>
+						<tr>
+							<td>Pr&eacute;nom</td><td th:text="${orderInfo.firstName}">Alfred</td>
+						</tr>
+						<tr>
+							<td>Adresse</td><td th:text="${orderInfo.adress}">1 rue du test</td>
+						</tr>
+						<tr>
+							<td>Num&eacute;ro de carte</td><td th:text="${orderInfo.creditCardNumber}">0123XXXXXXXX</td>
+						</tr>
+					</table>
+				</div>
+				<br/>
 				<div th:if="${shoppingCart.itemCount}>0">					
 					<table>
 						<tr>
@@ -54,8 +70,8 @@
 						<tr th:each="item : ${shoppingCart.items}">
 								<td th:text="${item.product.description}">Description</td>
 								<td th:text="${item.quantity}">2</td>
-								<td th:text="${item.unitPrice}">5</td>
-								<td th:text="${item.totalPrice}">10</td>
+								<td th:text="${item.unitPrice}">3</td>
+								<td th:text="${item.totalPrice}">6</td>
 						</tr>					
 						
 						<tr>
@@ -66,11 +82,6 @@
 						</tr>
 					</table>
 				</div>
-			</div>
-			<div>
-				<form method="post" th:action="${flowExecutionUrl}">
-   					<input type="submit" value="Valider la commande" name="_eventId_checkout"/>
-				</form>
 			</div>
 		</div>
 	</body>    

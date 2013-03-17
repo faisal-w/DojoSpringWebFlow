@@ -31,47 +31,17 @@
     
     
 	<body>
-		<div id="bd">
-			<div>
-				<form method="post" th:action="${flowExecutionUrl}">
-   					<input type="submit" value="Retour au catalogue" name="_eventId_return"/>
-				</form>
-			</div>
-		</div>
 		<div>
-			<h2>Votre panier</h2>			
-			<div>
-				<div th:unless="${shoppingCart.itemCount}>0">Votre panier est vide</div>
-				<div th:if="${shoppingCart.itemCount}>0">					
-					<table>
-						<tr>
-							<th>Article</th>
-							<th>Quantit&eacute;</th>
-							<th>Prix unitaire</th>
-							<th>Total</th>
-						</tr>
-						
-						<tr th:each="item : ${shoppingCart.items}">
-								<td th:text="${item.product.description}">Description</td>
-								<td th:text="${item.quantity}">2</td>
-								<td th:text="${item.unitPrice}">5</td>
-								<td th:text="${item.totalPrice}">10</td>
-						</tr>					
-						
-						<tr>
-							<td>TOTAL:</td>
-							<td></td>
-							<td></td>
-							<td th:text="${shoppingCart.totalPrice}">99</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			<div>
-				<form method="post" th:action="${flowExecutionUrl}">
-   					<input type="submit" value="Valider la commande" name="_eventId_checkout"/>
-				</form>
-			</div>
+			<form method="post" th:action="${flowExecutionUrl}" th:object="${orderInfo}">
+				<table>
+					<tr>
+						<td>Num&eacute;ro carte</td><td><input type="text" th:field="*{creditCardNumber}" /></td>
+					</tr>
+				</table>
+					<input type="submit" value="Pr&eacute;c&eacute;dent" name="_eventId_back"/>
+					<input type="submit" value="Valider" name="_eventId_continue"/>
+   					<input type="submit" value="Annuler" name="_eventId_cancel"/>
+			</form>
 		</div>
 	</body>    
     

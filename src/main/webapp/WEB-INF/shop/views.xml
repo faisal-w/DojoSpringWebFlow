@@ -13,4 +13,8 @@
 		<put-attribute name="body" value="/shop/cart.html :: content" type="thymeleaf"/>
 	</definition>
 	
+	<definition name="errorEmptyCart" extends="standardLayout" templateType="thymeleaf">
+		<put-attribute name="body" value="/shop/errorEmptyCart.html :: content" type="thymeleaf"/>
+	</definition>
+	
 </tiles-definitions>

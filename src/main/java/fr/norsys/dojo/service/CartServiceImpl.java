@@ -6,28 +6,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.norsys.dojo.model.OrderInfo;
 import fr.norsys.dojo.model.Product;
 import fr.norsys.dojo.model.ShoppingCart;
 
+
 @Service("cartService")
 public class CartServiceImpl implements CartService {
+	
+	private Logger logger = LoggerFactory.getLogger(CartServiceImpl.class);
 	
 	@Autowired
 	private ShoppingCart cart;
 	
 	private Map<Long, Product> products = new HashMap<Long, Product>();
-	private List<String> shippingOptions = new ArrayList<String>();
 	
 	public CartServiceImpl() {
-		addProduct(1L, "Kayak Freestyle", 699.90, "skittles.jpg");
-		addProduct(2L, "Kayak Mer", 1299.90, "dieselboy.jpg");
-		addProduct(3L, "Kayak Polo", 599.90, "vader.jpg");
-		
-		addShippingOption("Normal (5-10 jours)");
-		addShippingOption("Rapide (24/48h)");
+		addProduct(1L, "Kayak Freestyle", 699, "item_1.jpg");
+		addProduct(2L, "Kayak Mer", 1299, "item_2.jpg");
+		addProduct(3L, "Kayak Polo", 599, "item_3.jpg");
 	}
 	
 	private void addProduct(Long id, String desc, double price, String imgUrl) {
@@ -35,10 +37,6 @@ public class CartServiceImpl implements CartService {
 		products.put(id, product);
 	}
 	
-	private void addShippingOption(String shippingOption) {
-		shippingOptions.add(shippingOption);		
-	}
-
 	public ShoppingCart getShoppingCart() {
 		return cart;
 	}
@@ -57,13 +55,15 @@ public class CartServiceImpl implements CartService {
 		return products.get(productId);
 	}
 	
-	
-	public List<String> getShippingOptions() {
-		return shippingOptions;
+	public OrderInfo createOrderInfo(){
+		return new OrderInfo();
 	}
 	
-	
-	public void submitOrderForPayment() {
-		cart.clear();
+	public void submitOrder(OrderInfo orderInfo) {
+		logger.info("PROCEED ORDER");
+		logger.info("First Name : "+orderInfo.getFirstName());
+		logger.info("Last Name : "+orderInfo.getLastName());
+		logger.info("Adress : "+orderInfo.getAdress());
+		logger.info("CreditCard : "+orderInfo.getCreditCardNumber());
 	}
 }

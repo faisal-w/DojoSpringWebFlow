@@ -1,8 +1,7 @@
-package fr.norsys.dojo.service;
+package fr.norsys.dojo.model;
 
 import java.io.Serializable;
 
-import fr.norsys.dojo.model.Product;
 
 public class ShoppingCartLine implements Comparable<ShoppingCartLine>, Serializable {
 	private static final long serialVersionUID = 4134652647253355430L;

@@ -30,6 +30,26 @@
 			<render fragments="body" />			
 		</on-render>
 		<transition on="return" to="catalog"/>
+		<transition on="checkout" to="decideCheckout"/>
+	</view-state>
+	
+	<decision-state id="decideCheckout">
+		<if test="flowScope.shoppingCart.getItemCount()>0" then="checkout" else="errorEmptyCart"/>
+	</decision-state>
+	
+	<subflow-state id="checkout" subflow="checkout">
+		<input name="shoppingCart" value="flowScope.shoppingCart"/>
+    	<transition on="cartCheckout" to="catalog">
+        	<evaluate expression="flowScope.shoppingCart.clear()" />  
+    	</transition>
+    	<transition on="checkoutCancelled" to="cart" />
+	</subflow-state>
+	
+	<view-state id="errorEmptyCart">
+		<on-render>
+			<render fragments="body" />			
+		</on-render>
+		<transition on="return" to="catalog"/>	
 	</view-state>
 	
 	<end-state id="exit" view="externalRedirect:/" />

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+      	http://www.springframework.org/schema/webflow
+      	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+		
+	<input name="shoppingCart" required="true"/>	
+		
+	<on-start>
+		<evaluate expression="cartService.createOrderInfo()" result="flowScope.orderInfo" />
+	</on-start>
+		
+	<view-state id="clientInfo" model="orderInfo">
+		<on-render>
+			<render fragments="body" />			
+		</on-render>
+		<transition on="continue" to="paymentInfo"/>
+	</view-state>	
+	
+	<view-state id="paymentInfo" model="orderInfo">
+		<on-render>
+			<render fragments="body" />			
+		</on-render>
+		<transition on="back" to="clientInfo"/>
+		<transition on="continue" to="orderCheckout"/>
+	</view-state>
+	
+	<action-state id="orderCheckout">
+		<evaluate expression="cartService.submitOrder(orderInfo)"/>
+		<transition on="*" to="summary" />
+	</action-state>
+		
+	<view-state id="summary">
+		<on-render>
+			<render fragments="body" />			
+		</on-render>
+		<transition on="*" to="cartCheckout"/>
+	</view-state>
+	
+	<end-state id="cartCheckout" />
+	<end-state id="checkoutCancelled" />
+	
+	<global-transitions>
+		<transition on="cancel" to="checkoutCancelled"/>
+	</global-transitions>
+	
+
+</flow>
